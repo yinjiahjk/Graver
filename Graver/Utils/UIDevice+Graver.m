@@ -73,6 +73,9 @@
         else if (height == 812 && width == 375)
         {
             screenType = WMGScreenTypeIphoneX;
+        }else if (height == 896 && width == 414)
+        {
+            screenType = WMGScreenTypeIphoneXR;
         }
     }
     return screenType;
@@ -93,4 +96,13 @@
     return [self screenType] == WMGScreenTypeRetina4Inch;
 }
 
+- (BOOL)wmg_isIPhoneX
+{
+    return [self screenType] == WMGScreenTypeIphoneX;
+}
+
+- (BOOL)wmg_isIPhoneXR
+{
+    return [self screenType] == WMGScreenTypeIphoneXR;
+}
 @end
