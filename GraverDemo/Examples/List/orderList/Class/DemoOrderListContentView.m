@@ -10,6 +10,7 @@
 #import "NSAttributedString+GCalculateAndDraw.h"
 #import "WMGImage.h"
 #import "WMGTextAttachment+Event.h"
+#import "WMGImage+queryCache.h"
 
 @interface DemoOrderListContentView ()
 @property (nonatomic, strong) NSMutableArray <WMGTextAttachment *> * arrayAttachments;
@@ -34,7 +35,7 @@
 {
     if (_textDrawerDatas != textDrawerDatas) {
         _textDrawerDatas = textDrawerDatas;
-        [self setNeedsDisplay];
+//        [self setNeedsDisplay];
     }
 }
 
@@ -55,10 +56,20 @@
         }
         else if ([att.contents isKindOfClass:[WMGImage class]]){
             WMGImage *ctImage = (WMGImage *)att.contents;
+            UIImage *cachedImage;
+            if (ctImage.downloadUrl) {
+                cachedImage = [ctImage wmg_queryCacheImageWithUrl:ctImage.downloadUrl];
+            }
             
             if (ctImage.image) {
                 UIGraphicsPushContext(context);
                 [ctImage.image drawInRect:frame];
+                UIGraphicsPopContext();
+            } else if (cachedImage) {
+                ctImage.image = cachedImage;
+                UIGraphicsPushContext(context);
+                [ctImage.image drawInRect:frame];
+                ctImage.downloadUrl = nil;
                 UIGraphicsPopContext();
             }
             else

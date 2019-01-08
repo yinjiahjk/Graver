@@ -11,6 +11,7 @@
 #import <NSAttributedString+GCalculateAndDraw.h>
 #import "WMPoiListModel.h"
 #import "WMPoiListCellData.h"
+#import "WMMutableAttributedItem+fixPlaceholder.h"
 
 @implementation WMPoiListViewModel
 
@@ -32,7 +33,7 @@
     
     // 商家图片
     WMPoiListAttributedImage *logo = [[WMPoiListAttributedImage alloc] initWithText:nil];
-    [logo appendImageWithUrl:poi.restaurantImg size:CGSizeMake(80, 60)];
+    [logo fixed_appendImageWithUrl:poi.restaurantImg size:CGSizeMake(80, 60) placeholder: poi.restaurantLogoPlaceholder];
     
     CGSize size = [logo.resultString wmg_size];
     cellData.logoObj.frame = CGRectMake(spaceXStart, spaceYStart, size.width, size.height);
@@ -41,8 +42,9 @@
     spaceXStart += cellData.logoObj.frame.size.width;
     
     // 商家图片右上角 icon
+    // 商家图片右上角 icon
     WMPoiListAttributedImage *logoIcon = [[WMPoiListAttributedImage alloc] initWithText:nil];
-    [logoIcon appendImageWithUrl:poi.restaurantIcon size:CGSizeMake(26, 14)];
+    [logoIcon fixed_appendImageWithUrl:poi.restaurantIcon size:CGSizeMake(26, 14) placeholder: poi.restaurantIconPlaceholder];
     
     size = [logoIcon.resultString wmg_size];
     cellData.logoIconObj.frame = CGRectMake(spaceXStart - size.width, spaceYStart - 1, size.width, size.height);
