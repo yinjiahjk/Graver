@@ -10,8 +10,8 @@
 @implementation WMGImage (queryCache)
 
 -(nullable UIImage *)wmg_queryCacheImageWithUrl:(NSString *)url {
-    NSString *key = [[SDWebImageManager sharedManager]cacheKeyForURL:[NSURL URLWithString:url]];
-    if (!key) {
+    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:url]];
+    if (IsStrEmpty(key)) {
         return nil;
     }
     UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:key];

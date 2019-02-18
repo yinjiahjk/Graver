@@ -35,7 +35,6 @@
 {
     if (_textDrawerDatas != textDrawerDatas) {
         _textDrawerDatas = textDrawerDatas;
-//        [self setNeedsDisplay];
     }
 }
 

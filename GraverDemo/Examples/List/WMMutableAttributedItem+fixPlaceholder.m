@@ -15,15 +15,11 @@
     if (IsStrEmpty(imgUrl) && IsStrEmpty(placeholder)) {
         return self;
     }
-    
     WMGImage *image = [[WMGImage alloc] init];
     image.downloadUrl = imgUrl;
     image.placeholderName = placeholder;
-//    image.image = [UIImage imageNamed:placeholder];
     image.size = size;
-    
-    WMGTextAttachment *att = [WMGTextAttachment textAttachmentWithContents:image type:WMGAttachmentTypeStaticImage size:size];
-    
+    WMGTextAttachment *att = [WMGTextAttachment textAttachmentWithContents:image type:WMGAttachmentTypeStaticImage size:size];    
     return [self appendAttachment:att];
 }
 
