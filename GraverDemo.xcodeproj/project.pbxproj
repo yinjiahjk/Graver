@@ -52,6 +52,8 @@
 		DD66A00221AFCC6E00E9C7D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD66A00121AFCC6E00E9C7D5 /* Foundation.framework */; };
 		DD66A00421AFCC7400E9C7D5 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD66A00321AFCC7400E9C7D5 /* CoreFoundation.framework */; };
 		DDB29B3B21B7BC28007EE914 /* story_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DDB29B3A21B7BC28007EE914 /* story_icon.png */; };
+		EC25D79E21E43334002E5168 /* WMGImage+queryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EC25D79D21E43334002E5168 /* WMGImage+queryCache.m */; };
+		EC25D7A121E436F5002E5168 /* WMMutableAttributedItem+fixPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = EC25D7A021E436F5002E5168 /* WMMutableAttributedItem+fixPlaceholder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +149,10 @@
 		DD66A00121AFCC6E00E9C7D5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DD66A00321AFCC7400E9C7D5 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		DDB29B3A21B7BC28007EE914 /* story_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = story_icon.png; sourceTree = "<group>"; };
+		EC25D79C21E43334002E5168 /* WMGImage+queryCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMGImage+queryCache.h"; sourceTree = "<group>"; };
+		EC25D79D21E43334002E5168 /* WMGImage+queryCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WMGImage+queryCache.m"; sourceTree = "<group>"; };
+		EC25D79F21E436F5002E5168 /* WMMutableAttributedItem+fixPlaceholder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMMutableAttributedItem+fixPlaceholder.h"; sourceTree = "<group>"; };
+		EC25D7A021E436F5002E5168 /* WMMutableAttributedItem+fixPlaceholder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WMMutableAttributedItem+fixPlaceholder.m"; sourceTree = "<group>"; };
 		F275F515039514A3C4DD59C2 /* Pods-GraverDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraverDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GraverDemoTests/Pods-GraverDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -307,6 +313,10 @@
 		DD16297E21B145BB008A951E /* List */ = {
 			isa = PBXGroup;
 			children = (
+				EC25D79C21E43334002E5168 /* WMGImage+queryCache.h */,
+				EC25D79D21E43334002E5168 /* WMGImage+queryCache.m */,
+				EC25D79F21E436F5002E5168 /* WMMutableAttributedItem+fixPlaceholder.h */,
+				EC25D7A021E436F5002E5168 /* WMMutableAttributedItem+fixPlaceholder.m */,
 				2C930AD421B7AA230087E086 /* homeList */,
 				83206AF121B6573600A46AAB /* orderList */,
 			);
@@ -610,8 +620,10 @@
 				2C930AF521B7AA720087E086 /* WMPoiListViewModel.m in Sources */,
 				2C930B0B21B7B5B20087E086 /* WMPoiListCellData.m in Sources */,
 				DD669FB921AFB5A300E9C7D5 /* main.m in Sources */,
+				EC25D79E21E43334002E5168 /* WMGImage+queryCache.m in Sources */,
 				2C930B0821B7B5720087E086 /* WMPoiListCell.m in Sources */,
 				83206B0121B6579500A46AAB /* DemoOrderCellData.m in Sources */,
+				EC25D7A121E436F5002E5168 /* WMMutableAttributedItem+fixPlaceholder.m in Sources */,
 				83206AFF21B6579500A46AAB /* DemoOrderListViewController.m in Sources */,
 				DD669FAB21AFB5A200E9C7D5 /* AppDelegate.m in Sources */,
 			);
@@ -786,6 +798,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Graver.pch";
 				INFOPLIST_FILE = GraverDemo/Info.plist;
@@ -805,6 +818,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Graver.pch";
 				INFOPLIST_FILE = GraverDemo/Info.plist;

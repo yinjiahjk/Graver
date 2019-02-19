@@ -13,6 +13,7 @@
 #import <WMGTextLayout.h>
 #import <WMGTextAttachment.h>
 #import <WMGraverMacroDefine.h>
+#import "WMGImage+queryCache.h"
 
 @interface WMPoiListTextView ()<WMGTextDrawerDelegate,WMGTextLayoutDelegate>
 
@@ -44,7 +45,6 @@
     if (!CGRectEqualToRect(frame, self.frame))
     {
         [super setFrame:frame];
-        [self setNeedsDisplayAsync];
     }
 }
 
@@ -52,7 +52,6 @@
 - (void)setDrawerDates:(NSArray<WMGVisionObject *> *)drawerDates {
     if (_drawerDates != drawerDates) {
         _drawerDates = drawerDates;
-        [self setNeedsDisplayAsync];
     }
 }
 
@@ -130,10 +129,20 @@
         }
         else if ([att.contents isKindOfClass:[WMGImage class]]){
             WMGImage *ctImage = (WMGImage *)att.contents;
+            UIImage *cachedImage;
+            if (ctImage.downloadUrl) {
+                cachedImage = [ctImage wmg_queryCacheImageWithUrl:ctImage.downloadUrl];
+            }
             
             if (ctImage.image) {
                 UIGraphicsPushContext(context);
                 [ctImage.image drawInRect:frame];
+                UIGraphicsPopContext();
+            } else if (cachedImage) {
+                ctImage.image = cachedImage;
+                UIGraphicsPushContext(context);
+                [ctImage.image drawInRect:frame];
+                ctImage.downloadUrl = nil;
                 UIGraphicsPopContext();
             }
             else

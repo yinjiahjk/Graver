@@ -25,6 +25,11 @@
     NSArray *newDataArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     [newDataArray enumerateObjectsUsingBlock:^(NSDictionary  *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         WMPoiListModel *model = [WMPoiListModel modelWithDictionary:obj];
+        
+        //占位符由客户端控制，这里硬编码，实际项目中可以利用类似yymodel/jsonmodel的map功能map过来
+        model.restaurantLogoPlaceholder = @"icon_logo";
+        model.restaurantIconPlaceholder = @"icon_logo_top";
+        
         [result addObject:model];
     }];
     
