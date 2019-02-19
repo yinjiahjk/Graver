@@ -33,6 +33,7 @@ typedef NS_ENUM(NSUInteger, WMGScreenType)
     WMGScreenTypeIphone6     = 7,//6或者6+放大模式
     WMGScreenTypeIphone6Plus = 8,//6+
     WMGScreenTypeIphoneX     = 9,//iphone X
+    WMGScreenTypeIphoneXR    = 10,//iphone XR
 };
 
 @interface UIDevice (Graver)
@@ -57,5 +58,18 @@ typedef NS_ENUM(NSUInteger, WMGScreenType)
  */
 - (BOOL)wmg_isIPhone6Plus;
 
+/**
+ * 判断当前屏幕是否为 iphoneX 尺寸屏
+ *
+ * @return BOOL类型YES or NO.
+ */
+- (BOOL)wmg_isIPhoneX;
+
+/**
+ * 判断当前屏幕是否为 iphoneXR 尺寸屏
+ *
+ * @return BOOL类型YES or NO.
+ */
+- (BOOL)wmg_isIPhoneXR;
 @end
 
