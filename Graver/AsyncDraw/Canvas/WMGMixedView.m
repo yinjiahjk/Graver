@@ -213,17 +213,16 @@ NSString * const WMGMixedViewTextVerticalAlignmentKey = @"waimai-graver-mixedvie
             if (att.type == WMGAttachmentTypeStaticImage){
                 WMGImage *gImage = (WMGImage *)att.contents;
                 if ([gImage isKindOfClass:[WMGImage class]]) {
-                    
-//                    [gImage wmg_loadImageWithUrl:gImage.downloadUrl options:0 progress:NULL completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-//
-//                        [_lock lock];
-//                        if ([_arrayAttachments containsObject:att]) {
-//                            [_arrayAttachments removeObject:att];
-//                            i--;
-//                            [self setNeedsDisplay];
-//                        }
-//                        [_lock unlock];
-//                    }];
+                    [gImage wmg_loadImageWithUrl:gImage.downloadUrl options:0 progress:NULL completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+
+                        [self.lock lock];
+                        if ([self.arrayAttachments containsObject:att]) {
+                            [self.arrayAttachments removeObject:att];
+                            i--;
+                            [self setNeedsDisplay];
+                        }
+                        [self.lock unlock];
+                    }];
                 }
             }
         }
