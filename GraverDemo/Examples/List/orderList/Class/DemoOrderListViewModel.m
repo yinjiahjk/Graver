@@ -27,7 +27,7 @@
     
     WMGVisionObject * poiImageDrawObject = [[WMGVisionObject alloc] init];
     poiImageDrawObject.frame = CGRectMake(15, 15, 35, 35);
-    poiImageDrawObject.value = poiImageAttributedItem.resultString;
+    poiImageDrawObject.value = poiImageAttributedItem;
     
     [cellData.textDrawerDatas addObject:poiImageDrawObject];
     //商家名称
@@ -38,7 +38,7 @@
     CGSize titleSize = [titleAttributedItem.resultString wmg_size];
     
     WMGVisionObject * titleDrawObject = [[WMGVisionObject alloc] init];
-    titleDrawObject.value = titleAttributedItem.resultString;
+    titleDrawObject.value = titleAttributedItem;
     titleDrawObject.frame = CGRectMake(60, 14, titleSize.width>180?180:titleSize.width, titleSize.height);
     [cellData.textDrawerDatas addObject:titleDrawObject];
     
@@ -46,14 +46,14 @@
     WMMutableAttributedItem * titleArrowAttributedItem = [WMMutableAttributedItem itemWithImageName:@"icon_arrow_store" size:CGSizeMake(10, 18)];
     WMGVisionObject * titleArrowDrawObject = [[WMGVisionObject alloc] init];
     titleArrowDrawObject.frame = CGRectMake(titleDrawObject.frame.size.width+titleDrawObject.frame.origin.x, titleDrawObject.frame.origin.y, 10, 18);
-    titleArrowDrawObject.value = titleArrowAttributedItem.resultString;
+    titleArrowDrawObject.value = titleArrowAttributedItem;
     [cellData.textDrawerDatas addObject:titleArrowDrawObject];
     
     //订单状态
     WMMutableAttributedItem * statusAttributedItem = [WMMutableAttributedItem itemWithText:item.statusDescription];
     [statusAttributedItem setFont:[UIFont systemFontOfSize:15]];
     WMGVisionObject * statusDrawObject = [[WMGVisionObject alloc] init];
-    statusDrawObject.value = statusAttributedItem.resultString;
+    statusDrawObject.value = statusAttributedItem;
     CGSize statusSize = [statusAttributedItem.resultString wmg_size];
     statusDrawObject.frame = CGRectMake(cellData.cellWidth-statusSize.width-15, 24, statusSize.width, statusSize.height);
     [cellData.textDrawerDatas addObject:statusDrawObject];
@@ -75,7 +75,7 @@
     
     WMGVisionObject * activityListObject = [[WMGVisionObject alloc] init];
     activityListObject.frame = CGRectMake(titleDrawObject.frame.origin.x, titleDrawObject.frame.origin.y+titleDrawObject.frame.size.height+4, 200, 15);
-    activityListObject.value = activityListAttributedItem.resultString;
+    activityListObject.value = activityListAttributedItem;
     [cellData.textDrawerDatas addObject:activityListObject];
     
     //分隔线
@@ -85,7 +85,7 @@
     
     WMGVisionObject * lineDrawObject = [[WMGVisionObject alloc] init];
     lineDrawObject.frame = CGRectMake(titleDrawObject.frame.origin.x, activityListObject.frame.origin.y+activityListObject.frame.size.height+5, cellData.cellWidth-75, 15);
-    lineDrawObject.value = lineAttributedItem.resultString;
+    lineDrawObject.value = lineAttributedItem;
     [cellData.textDrawerDatas addObject:lineDrawObject];
     
     //食物
@@ -102,7 +102,7 @@
     
     WMGVisionObject * foodDrawObject = [[WMGVisionObject alloc] init];
     foodDrawObject.frame = CGRectMake(titleDrawObject.frame.origin.x, lineDrawObject.frame.origin.y+lineDrawObject.frame.size.height+18, cellData.cellWidth-titleDrawObject.frame.origin.x, totalPriceSize.height);
-    foodDrawObject.value = foodAttributedItem.resultString;
+    foodDrawObject.value = foodAttributedItem;
     [cellData.textDrawerDatas addObject:foodDrawObject];
     
     
@@ -125,16 +125,25 @@
         [buttonAttributedItem appendImageWithImage:image size:CGSizeMake(73, 32)];
         [buttonListAttributedItem appendAttributedItem:buttonAttributedItem];
         [buttonListAttributedItem appendWhiteSpaceWithWidth:10];
+        buttonAttributedItem.userInfo = buttonInfo.title;
+        [buttonAttributedItem addTarget:self.owner action:@selector(buttonDidClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     CGSize buttonListSize = [buttonListAttributedItem.resultString wmg_size];
     
     WMGVisionObject * buttonListObject = [[WMGVisionObject alloc] init];
     buttonListObject.frame = CGRectMake(cellData.cellWidth-buttonListSize.width, foodDrawObject.frame.origin.y+foodDrawObject.frame.size.height+22, buttonListSize.width, 32);
-    buttonListObject.value = buttonListAttributedItem.resultString;
+    buttonListObject.value = buttonListAttributedItem;
     [cellData.textDrawerDatas addObject:buttonListObject];
     
     cellData.cellHeight = buttonListObject.frame.origin.y + buttonListObject.frame.size.height+14;
 
     return cellData;
 }
+
+- (void)buttonDidClick:(id)userInfo {
+    if ([self.owner respondsToSelector:@selector(buttonDidClick:)]) {
+        [self.owner performSelector:@selector(buttonDidClick:) withObject:userInfo];
+    }
+}
+
 @end

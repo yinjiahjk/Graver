@@ -34,6 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 // 视觉元素中涉及的文本组件
 @property (nonatomic, strong, readonly) NSArray <WMGTextAttachment *> *arrayAttachments;
 
+// 给 item 绑定的自定义信息
+@property (nonatomic, strong) id userInfo;
+
 /**
  * 根据Text创建一个AttributedItem
  *
@@ -312,6 +315,18 @@ NS_ASSUME_NONNULL_BEGIN
  *
  */
 - (WMMutableAttributedItem *)appendAttachment:(WMGTextAttachment *)att;
+
+
+/**
+ *  给一个文本组件添加事件
+ *
+ * @param target 事件执行者
+ * @param action 事件行为
+ * @param controlEvents 事件类型
+ *
+ */
+- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
+
 
 @end
 

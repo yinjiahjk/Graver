@@ -81,6 +81,9 @@ NS_ASSUME_NONNULL_BEGIN
 // 松耦合方式连接engine和viewModel，通过桥接模式实现
 @property (nonatomic, strong) WMGBaseEngine *engine;
 
+// viewModel的持有者
+@property (nonatomic, weak) id owner;
+
 /**
  * 同步刷新方法，该方法会根据BaseModel的list刷新出最新的UI数据
  * 该方法是线程安全的

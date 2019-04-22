@@ -7,11 +7,11 @@
 //
 
 #import "DemoOrderListCell.h"
-#import "DemoOrderListContentView.h"
+#import "WMGListTextView.h"
 #import "DemoOrderCellData.h"
 
 @interface DemoOrderListCell ()
-@property (nonatomic, strong) DemoOrderListContentView * orderContentView;
+@property (nonatomic, strong) WMGListTextView * orderContentView;
 @end
 
 @implementation DemoOrderListCell
@@ -21,7 +21,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        _orderContentView = [[DemoOrderListContentView alloc] initWithFrame:CGRectMake(10, 5, 0, 0)];
+        _orderContentView = [[WMGListTextView alloc] initWithFrame:CGRectMake(10, 5, 0, 0)];
         _orderContentView.cornerRadius = 2;
         _orderContentView.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:_orderContentView];
@@ -32,7 +32,7 @@
 - (void)setupCellData:(DemoOrderCellData *)cellData
 {
     _orderContentView.frame = CGRectMake(10, 5, cellData.cellWidth, cellData.cellHeight-10);
-    _orderContentView.textDrawerDatas = cellData.textDrawerDatas;
+    _orderContentView.drawerDates = cellData.textDrawerDatas;
 }
 
 

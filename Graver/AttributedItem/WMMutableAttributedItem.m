@@ -40,6 +40,8 @@
 
 @implementation WMMutableAttributedItem
 
+@dynamic userInfo;
+
 + (instancetype)itemWithText:(NSString *)text
 {
     WMMutableAttributedItem *t = [[WMMutableAttributedItem alloc] initWithText:text];
@@ -67,7 +69,12 @@
         
         _resultString = nil;
         _arrayAttachments = [NSMutableArray array];
-        
+        if (text.length) {
+            WMGTextAttachment *att = [WMGTextAttachment textAttachmentWithContents:self type:WMGAttachmentTypeText size:CGSizeZero];
+            att.position = 0;
+            att.length = text.length;
+            [_arrayAttachments addObject:att];
+        }
         _flags.needsRebuild = YES;
     }
     return self;
@@ -406,6 +413,32 @@
 {
     [self setNeedsRebuild];
     [_textStorage wmg_setTextParagraphStyle:paragraphStyle fontSize:fontSize];
+}
+
+- (void)setUserInfo:(id)userInfo {
+    if (userInfo) {
+        [self.arrayAttachments enumerateObjectsUsingBlock:^(WMGTextAttachment * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx == 0 || !obj.userInfo) {
+                obj.userInfo = userInfo;
+            }
+        }];
+    }
+}
+
+- (id)userInfo {
+    WMGTextAttachment *attachment = [self.arrayAttachments objectAtIndex:0];
+    return attachment.userInfo;
+}
+
+- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents {
+    if (target && action) {
+        
+        [self.arrayAttachments enumerateObjectsUsingBlock:^(WMGTextAttachment * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx == 0 || (!obj.target || !obj.selector)) {
+                [obj addTarget:target action:action forControlEvents:controlEvents];
+            }
+        }];
+    }
 }
 
 @end

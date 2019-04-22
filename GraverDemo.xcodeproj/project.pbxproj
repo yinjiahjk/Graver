@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C1E5CB5226D713600D475E1 /* WMGListTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E5CB4226D713600D475E1 /* WMGListTextView.m */; };
 		2C930ADE21B7AA560087E086 /* poi.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C930AD721B7AA550087E086 /* poi.json */; };
 		2C930ADF21B7AA560087E086 /* icon_star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C930AD821B7AA550087E086 /* icon_star@2x.png */; };
 		2C930AE021B7AA560087E086 /* icon_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C930AD921B7AA550087E086 /* icon_up@2x.png */; };
@@ -14,7 +15,6 @@
 		2C930AE221B7AA560087E086 /* icon_category@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C930ADB21B7AA550087E086 /* icon_category@2x.png */; };
 		2C930AE321B7AA560087E086 /* icon_star_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C930ADC21B7AA550087E086 /* icon_star_gray@2x.png */; };
 		2C930AE421B7AA560087E086 /* icon_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C930ADD21B7AA560087E086 /* icon_down@2x.png */; };
-		2C930AF321B7AA720087E086 /* WMPoiListTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C930AE521B7AA710087E086 /* WMPoiListTextView.m */; };
 		2C930AF521B7AA720087E086 /* WMPoiListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C930AE721B7AA710087E086 /* WMPoiListViewModel.m */; };
 		2C930B0221B7B4990087E086 /* WMPoiListEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C930B0021B7B4980087E086 /* WMPoiListEngine.m */; };
 		2C930B0521B7B4DD0087E086 /* WMPoiListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C930B0421B7B4DD0087E086 /* WMPoiListModel.m */; };
@@ -25,7 +25,6 @@
 		83206AFF21B6579500A46AAB /* DemoOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83206AF221B6579300A46AAB /* DemoOrderListViewController.m */; };
 		83206B0121B6579500A46AAB /* DemoOrderCellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 83206AF721B6579400A46AAB /* DemoOrderCellData.m */; };
 		83206B0221B6579500A46AAB /* DemoOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83206AF921B6579400A46AAB /* DemoOrderModel.m */; };
-		83206B0421B6579500A46AAB /* DemoOrderListContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83206AFC21B6579400A46AAB /* DemoOrderListContentView.m */; };
 		83206B0521B6579500A46AAB /* DemoOrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83206AFD21B6579500A46AAB /* DemoOrderListCell.m */; };
 		83206B0921B792E000A46AAB /* DemoOrderListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83206B0821B792E000A46AAB /* DemoOrderListViewModel.m */; };
 		83206B0C21B7968100A46AAB /* DemoOrderListEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 83206B0B21B7968100A46AAB /* DemoOrderListEngine.m */; };
@@ -75,6 +74,8 @@
 
 /* Begin PBXFileReference section */
 		1537B55946C63FDB2597DEC2 /* Pods-GraverDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraverDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GraverDemoTests/Pods-GraverDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		2C1E5CB3226D713600D475E1 /* WMGListTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMGListTextView.h; sourceTree = "<group>"; };
+		2C1E5CB4226D713600D475E1 /* WMGListTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMGListTextView.m; sourceTree = "<group>"; };
 		2C930AD721B7AA550087E086 /* poi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = poi.json; sourceTree = "<group>"; };
 		2C930AD821B7AA550087E086 /* icon_star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_star@2x.png"; sourceTree = "<group>"; };
 		2C930AD921B7AA550087E086 /* icon_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_up@2x.png"; sourceTree = "<group>"; };
@@ -82,10 +83,8 @@
 		2C930ADB21B7AA550087E086 /* icon_category@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_category@2x.png"; sourceTree = "<group>"; };
 		2C930ADC21B7AA550087E086 /* icon_star_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_star_gray@2x.png"; sourceTree = "<group>"; };
 		2C930ADD21B7AA560087E086 /* icon_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_down@2x.png"; sourceTree = "<group>"; };
-		2C930AE521B7AA710087E086 /* WMPoiListTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMPoiListTextView.m; sourceTree = "<group>"; };
 		2C930AE721B7AA710087E086 /* WMPoiListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMPoiListViewModel.m; sourceTree = "<group>"; };
 		2C930AE921B7AA720087E086 /* WMPoiListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPoiListViewModel.h; sourceTree = "<group>"; };
-		2C930AED21B7AA720087E086 /* WMPoiListTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPoiListTextView.h; sourceTree = "<group>"; };
 		2C930B0021B7B4980087E086 /* WMPoiListEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMPoiListEngine.m; sourceTree = "<group>"; };
 		2C930B0121B7B4990087E086 /* WMPoiListEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPoiListEngine.h; sourceTree = "<group>"; };
 		2C930B0321B7B4DC0087E086 /* WMPoiListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPoiListModel.h; sourceTree = "<group>"; };
@@ -102,12 +101,10 @@
 		5CDF682C72CF5B6FCDE31D65 /* Pods-GraverDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraverDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GraverDemo/Pods-GraverDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		83206AF221B6579300A46AAB /* DemoOrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoOrderListViewController.m; sourceTree = "<group>"; };
 		83206AF321B6579300A46AAB /* DemoOrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoOrderListCell.h; sourceTree = "<group>"; };
-		83206AF521B6579400A46AAB /* DemoOrderListContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoOrderListContentView.h; sourceTree = "<group>"; };
 		83206AF621B6579400A46AAB /* DemoOrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoOrderListViewController.h; sourceTree = "<group>"; };
 		83206AF721B6579400A46AAB /* DemoOrderCellData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoOrderCellData.m; sourceTree = "<group>"; };
 		83206AF821B6579400A46AAB /* DemoOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoOrderModel.h; sourceTree = "<group>"; };
 		83206AF921B6579400A46AAB /* DemoOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoOrderModel.m; sourceTree = "<group>"; };
-		83206AFC21B6579400A46AAB /* DemoOrderListContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoOrderListContentView.m; sourceTree = "<group>"; };
 		83206AFD21B6579500A46AAB /* DemoOrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoOrderListCell.m; sourceTree = "<group>"; };
 		83206AFE21B6579500A46AAB /* DemoOrderCellData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoOrderCellData.h; sourceTree = "<group>"; };
 		83206B0721B792E000A46AAB /* DemoOrderListViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoOrderListViewModel.h; sourceTree = "<group>"; };
@@ -210,8 +207,6 @@
 				2C930B0921B7B5B20087E086 /* WMPoiListCellData.m */,
 				2C930B0721B7B5720087E086 /* WMPoiListCell.h */,
 				2C930B0621B7B5720087E086 /* WMPoiListCell.m */,
-				2C930AED21B7AA720087E086 /* WMPoiListTextView.h */,
-				2C930AE521B7AA710087E086 /* WMPoiListTextView.m */,
 				2C930AE921B7AA720087E086 /* WMPoiListViewModel.h */,
 				2C930AE721B7AA710087E086 /* WMPoiListViewModel.m */,
 				2C930B0321B7B4DC0087E086 /* WMPoiListModel.h */,
@@ -260,8 +255,6 @@
 			children = (
 				83206AF321B6579300A46AAB /* DemoOrderListCell.h */,
 				83206AFD21B6579500A46AAB /* DemoOrderListCell.m */,
-				83206AF521B6579400A46AAB /* DemoOrderListContentView.h */,
-				83206AFC21B6579400A46AAB /* DemoOrderListContentView.m */,
 				83206AF621B6579400A46AAB /* DemoOrderListViewController.h */,
 				83206AF221B6579300A46AAB /* DemoOrderListViewController.m */,
 				83206AFE21B6579500A46AAB /* DemoOrderCellData.h */,
@@ -313,6 +306,8 @@
 		DD16297E21B145BB008A951E /* List */ = {
 			isa = PBXGroup;
 			children = (
+				2C1E5CB3226D713600D475E1 /* WMGListTextView.h */,
+				2C1E5CB4226D713600D475E1 /* WMGListTextView.m */,
 				EC25D79C21E43334002E5168 /* WMGImage+queryCache.h */,
 				EC25D79D21E43334002E5168 /* WMGImage+queryCache.m */,
 				EC25D79F21E436F5002E5168 /* WMMutableAttributedItem+fixPlaceholder.h */,
@@ -605,7 +600,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C930B1121B7B8240087E086 /* WMPoiListAttributedImage.m in Sources */,
-				83206B0421B6579500A46AAB /* DemoOrderListContentView.m in Sources */,
 				DD669FAE21AFB5A200E9C7D5 /* ViewController.m in Sources */,
 				83206B0221B6579500A46AAB /* DemoOrderModel.m in Sources */,
 				83206B0C21B7968100A46AAB /* DemoOrderListEngine.m in Sources */,
@@ -615,7 +609,6 @@
 				DD16297321B14086008A951E /* ExamplesViewController.m in Sources */,
 				2C930B0521B7B4DD0087E086 /* WMPoiListModel.m in Sources */,
 				2C930B0E21B7B6490087E086 /* WMPoiListViewController.m in Sources */,
-				2C930AF321B7AA720087E086 /* WMPoiListTextView.m in Sources */,
 				DD16297C21B14470008A951E /* BasicDetailViewController.m in Sources */,
 				2C930AF521B7AA720087E086 /* WMPoiListViewModel.m in Sources */,
 				2C930B0B21B7B5B20087E086 /* WMPoiListCellData.m in Sources */,
@@ -625,6 +618,7 @@
 				83206B0121B6579500A46AAB /* DemoOrderCellData.m in Sources */,
 				EC25D7A121E436F5002E5168 /* WMMutableAttributedItem+fixPlaceholder.m in Sources */,
 				83206AFF21B6579500A46AAB /* DemoOrderListViewController.m in Sources */,
+				2C1E5CB5226D713600D475E1 /* WMGListTextView.m in Sources */,
 				DD669FAB21AFB5A200E9C7D5 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

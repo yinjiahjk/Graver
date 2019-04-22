@@ -6,24 +6,26 @@
 //  Copyright © 2018年 sankuai. All rights reserved.
 //
 
-#import "WMPoiListTextView.h"
+#import "WMGListTextView.h"
 #import <NSAttributedString+GCalculateAndDraw.h>
 #import <WMGImage.h>
 #import <WMGTextDrawer.h>
+#import <WMGTextDrawer+Event.h>
 #import <WMGTextLayout.h>
 #import <WMGTextAttachment.h>
 #import <WMGraverMacroDefine.h>
 #import "WMGImage+queryCache.h"
 
-@interface WMPoiListTextView ()<WMGTextDrawerDelegate,WMGTextLayoutDelegate>
+@interface WMGListTextView ()<WMGTextDrawerDelegate,WMGTextLayoutDelegate,WMGTextDrawerEventDelegate>
 
 @property (nonatomic, strong) NSRecursiveLock *lock;
 @property (nonatomic, strong) NSMutableArray <WMGTextAttachment *> *arrayAttachments;
 @property (nonatomic, strong) WMGTextDrawer *textDrawer;
+@property (nonatomic, strong) WMMutableAttributedItem *clickItem;
 
 @end
 
-@implementation WMPoiListTextView
+@implementation WMGListTextView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -32,6 +34,7 @@
         _textDrawer = [[WMGTextDrawer alloc] init];
         _textDrawer.delegate = self;
         _textDrawer.textLayout.delegate = self;
+        _textDrawer.eventDelegate = self;
         
         _lock = [[NSRecursiveLock alloc] init];
         _arrayAttachments = [NSMutableArray array];
@@ -52,6 +55,7 @@
 - (void)setDrawerDates:(NSArray<WMGVisionObject *> *)drawerDates {
     if (_drawerDates != drawerDates) {
         _drawerDates = drawerDates;
+        [self setNeedsDisplay];
     }
 }
 
@@ -64,13 +68,14 @@
     if (self.drawerDates.count <= 0) {
         return YES;
     }
-    
+    __weak typeof(self)weakSelf = self;
     [self.drawerDates enumerateObjectsUsingBlock:^(WMGVisionObject * _Nonnull drawerData, NSUInteger idx, BOOL * _Nonnull stop) {
-        self.textDrawer.frame = drawerData.frame;
-        self.textDrawer.textLayout.attributedString = drawerData.value;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.textDrawer.frame = drawerData.frame;
+        strongSelf.textDrawer.textLayout.attributedString = [drawerData.value resultString];
         CGRect visibleRect = CGRectNull;
-        [self.textDrawer drawInContext:context visibleRect:visibleRect replaceAttachments:YES shouldInterruptBlock:^BOOL{
-            return initialDrawingCount != self.drawingCount ? YES : NO;
+        [strongSelf.textDrawer drawInContext:context visibleRect:visibleRect replaceAttachments:YES shouldInterruptBlock:^BOOL{
+            return initialDrawingCount != strongSelf.drawingCount ? YES : NO;
         }];
     }];
     return YES;
@@ -164,6 +169,91 @@
             }
         }
     }
+}
+
+
+#pragma mark - Event Handling
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    CGPoint location = [[touches anyObject] locationInView:self];
+    
+    __weak typeof(self)weakSelf = self;
+    [self.drawerDates enumerateObjectsUsingBlock:^(WMGVisionObject * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        __strong typeof(weakSelf)strongSelf = weakSelf;
+        CGRect frame = obj.frame;
+        if (CGRectContainsPoint(frame, location)) {
+            strongSelf.clickItem = obj.value;
+            strongSelf.textDrawer.frame = frame;
+            strongSelf.textDrawer.textLayout.attributedString = [obj.value resultString];
+        }
+    }];
+    [_textDrawer touchesBegan:touches withEvent:event];
+    
+    if (!_textDrawer.pressingActiveRange)
+    {
+        [super touchesBegan:touches withEvent:event];
+    }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_textDrawer touchesEnded:touches withEvent:event];
+    [super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_textDrawer touchesMoved:touches withEvent:event];
+    
+    if (!_textDrawer.pressingActiveRange)
+    {
+        [super touchesMoved:touches withEvent:event];
+    }
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_textDrawer touchesCancelled:touches withEvent:event];
+    [super touchesCancelled:touches withEvent:event];
+}
+
+#pragma mark - WMTextDrawerEventDelegate
+
+- (UIView *)contextViewForTextDrawer:(WMGTextDrawer *)textDrawer
+{
+    return self;
+}
+
+- (NSArray *)activeRangesForTextDrawer:(WMGTextDrawer *)textDrawer
+{
+    
+    NSMutableArray *arrayActiveRanges = [NSMutableArray array];
+    for (WMGTextAttachment *att in _clickItem.arrayAttachments) {
+        WMGTextActiveRange *range = [WMGTextActiveRange activeRange:NSMakeRange(att.position, att.length) type:WMGActiveRangeTypeAttachment text:@""];
+        range.bindingData = att;
+        [arrayActiveRanges addObject:range];
+    }
+    
+    return arrayActiveRanges;
+}
+
+- (void)textDrawer:(WMGTextDrawer *)textDrawer didPressActiveRange:(id<WMGActiveRange>)activeRange
+{
+    if (activeRange.type == WMGActiveRangeTypeAttachment) {
+        WMGTextAttachment *att = (WMGTextAttachment *)activeRange.bindingData;
+        [att handleEvent:att.userInfo];
+    }
+}
+
+- (BOOL)textDrawer:(WMGTextDrawer *)textDrawer shouldInteractWithActiveRange:(id<WMGActiveRange>)activeRange
+{
+    return YES;
+}
+
+- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    return NO;
 }
 
 #pragma mark - WMGTextLayoutDelegate

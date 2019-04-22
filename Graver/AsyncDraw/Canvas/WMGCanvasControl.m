@@ -145,6 +145,9 @@
         }
         
         [self _sendActionsForControlEvents:currentEvents withEvent:event];
+        
+    }else {
+        [self.nextResponder touchesBegan:touches withEvent:event];
     }
 }
 
@@ -156,6 +159,8 @@
     {
         [self cancelTrackingWithEvent:event];
         [self _sendActionsForControlEvents:UIControlEventTouchCancel withEvent:event];
+    }else {
+        [self.nextResponder touchesCancelled:touches withEvent:event];
     }
     
     _touchInside = NO;
@@ -178,6 +183,8 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self _sendActionsForControlEvents:events withEvent:event];
         });
+    }else {
+        [self.nextResponder touchesEnded:touches withEvent:event];
     }
     
     _tracking = NO;
@@ -211,6 +218,8 @@
             
             [self _sendActionsForControlEvents:currentEvents withEvent:event];
         }
+    }else {
+        [self.nextResponder touchesMoved:touches withEvent:event];
     }
 }
 

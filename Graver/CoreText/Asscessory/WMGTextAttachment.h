@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WMGTextAttachment : NSObject<WMGAttachment>
 
+// 给 attachment 绑定的自定义信息
+@property (nonatomic, strong) id userInfo;
+
 /**
  *  构建一个文本组件的类方法
  *
