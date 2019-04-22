@@ -40,8 +40,6 @@
 
 @implementation WMMutableAttributedItem
 
-@dynamic userInfo;
-
 + (instancetype)itemWithText:(NSString *)text
 {
     WMMutableAttributedItem *t = [[WMMutableAttributedItem alloc] initWithText:text];
@@ -415,26 +413,22 @@
     [_textStorage wmg_setTextParagraphStyle:paragraphStyle fontSize:fontSize];
 }
 
-- (void)setUserInfo:(id)userInfo {
+- (void)setUserInfo:(id)userInfo force:(BOOL)force
+{
     if (userInfo) {
         [self.arrayAttachments enumerateObjectsUsingBlock:^(WMGTextAttachment * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (idx == 0 || !obj.userInfo) {
+            if (!obj.userInfo || force) {
                 obj.userInfo = userInfo;
             }
         }];
     }
 }
 
-- (id)userInfo {
-    WMGTextAttachment *attachment = [self.arrayAttachments objectAtIndex:0];
-    return attachment.userInfo;
-}
-
-- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents {
+- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents force:(BOOL)force
+{
     if (target && action) {
-        
         [self.arrayAttachments enumerateObjectsUsingBlock:^(WMGTextAttachment * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (idx == 0 || (!obj.target || !obj.selector)) {
+            if (force || (!obj.target || !obj.selector)) {
                 [obj addTarget:target action:action forControlEvents:controlEvents];
             }
         }];

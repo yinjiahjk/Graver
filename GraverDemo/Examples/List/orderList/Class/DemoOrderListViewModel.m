@@ -125,9 +125,12 @@
         [buttonAttributedItem appendImageWithImage:image size:CGSizeMake(73, 32)];
         [buttonListAttributedItem appendAttributedItem:buttonAttributedItem];
         [buttonListAttributedItem appendWhiteSpaceWithWidth:10];
-        buttonAttributedItem.userInfo = buttonInfo.title;
-        [buttonAttributedItem addTarget:self.owner action:@selector(buttonDidClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [buttonAttributedItem setUserInfo:buttonInfo.title force:YES];
+        [buttonAttributedItem addTarget:self.owner action:@selector(buttonDidClick:) forControlEvents:UIControlEventTouchUpInside force:YES];
     }
+    [buttonListAttributedItem setUserInfo:@"按钮空白" force:NO];
+    [buttonListAttributedItem addTarget:self action:@selector(buttonDidClick:) forControlEvents:UIControlEventTouchUpInside force:NO];
     CGSize buttonListSize = [buttonListAttributedItem.resultString wmg_size];
     
     WMGVisionObject * buttonListObject = [[WMGVisionObject alloc] init];
