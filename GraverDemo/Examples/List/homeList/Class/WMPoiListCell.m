@@ -7,18 +7,17 @@
 //
 
 #import "WMPoiListCell.h"
-#import "WMPoiListTextView.h"
+#import "WMGListTextView.h"
 
 @interface WMPoiListCell ()
-@property (nonatomic, strong) WMPoiListTextView *drawView;
+@property (nonatomic, strong) WMGListTextView *drawView;
 @end
 
 @implementation WMPoiListCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _drawView = [[WMPoiListTextView alloc] initWithFrame:CGRectZero];
-        [_drawView addTarget:self action:@selector(tagDidClick) forControlEvents:UIControlEventTouchUpInside];
+        _drawView = [[WMGListTextView alloc] initWithFrame:CGRectZero];
         [self.contentView addSubview:_drawView];
         
     }
@@ -29,12 +28,6 @@
     [super setupCellData:cellData];
     _drawView.frame = CGRectMake(0, 0, cellData.cellWidth, cellData.cellHeight);
     _drawView.drawerDates = cellData.mutableAttributedTexts;
-}
-
-- (void)tagDidClick {
-    if ([self.delegate respondsToSelector:@selector(tagDidClickInCell:)]) {
-        [self.delegate tagDidClickInCell:self];
-    }
 }
 
 @end

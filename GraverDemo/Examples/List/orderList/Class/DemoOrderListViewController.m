@@ -27,6 +27,7 @@
     
     _viewModel = [[DemoOrderListViewModel alloc] init];
     _viewModel.engine = [[DemoOrderListEngine alloc] init];
+    _viewModel.owner = self;
     
     __weak typeof(self) weakSelf = self;
     [_viewModel reloadDataWithParams:@{} completion:^(NSArray<WMGBaseCellData *> *cellLayouts, NSError *error) {
@@ -85,7 +86,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     WMGBaseCellData *cellData = [_viewModel.arrayLayouts objectAtIndex:indexPath.row];
     DemoOrderModel *model = (DemoOrderModel *)cellData.metaData;
@@ -95,6 +95,10 @@
     
     [_viewModel refreshModelWithResultSet:_viewModel.engine.resultSet];
     [_tableview reloadData];
+}
+
+- (void)buttonDidClick:(NSString *)title {
+    NSLog(@"点击了按钮: %@",title);
 }
 
 @end

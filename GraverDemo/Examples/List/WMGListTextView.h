@@ -14,7 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WMPoiListTextView : WMGCanvasControl
+@interface WMGListTextView : WMGCanvasControl
 
 @property (nonatomic, strong) NSArray<WMGVisionObject *> *drawerDates;
 

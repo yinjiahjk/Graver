@@ -37,7 +37,7 @@
     
     CGSize size = [logo.resultString wmg_size];
     cellData.logoObj.frame = CGRectMake(spaceXStart, spaceYStart, size.width, size.height);
-    cellData.logoObj.value = logo.resultString;
+    cellData.logoObj.value = logo;
     
     spaceXStart += cellData.logoObj.frame.size.width;
     
@@ -48,7 +48,7 @@
     
     size = [logoIcon.resultString wmg_size];
     cellData.logoIconObj.frame = CGRectMake(spaceXStart - size.width, spaceYStart - 1, size.width, size.height);
-    cellData.logoIconObj.value = logoIcon.resultString;
+    cellData.logoIconObj.value = logoIcon;
     spaceXStart += 8;
     
     // 商家名称
@@ -56,9 +56,13 @@
     [name setFont:[UIFont systemFontOfSize:16]];
     [name setColor:WMGHEXCOLOR(0x33312D)];
     
+    // 给商家名称添加点击事件
+    [name setUserInfo:poi.name];
+    [name addTarget:self action:@selector(titleDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     size = [name.resultString wmg_sizeConstrainedToWidth:(spaceXEnd - spaceXStart) numberOfLines:1];
     cellData.nameObj.frame = CGRectMake(spaceXStart, spaceYStart, size.width, size.height);
-    cellData.nameObj.value = name.resultString;
+    cellData.nameObj.value = name;
     spaceYStart += size.height;
     
     // 仅预定
@@ -83,7 +87,7 @@
             
             size = [reservationLine.resultString wmg_sizeConstrainedToWidth:(spaceXEnd - spaceXStart) numberOfLines:1];
             cellData.reservationObj.frame = CGRectMake(spaceXStart, spaceYStart, size.width, size.height);
-            cellData.reservationObj.value = reservationLine.resultString;
+            cellData.reservationObj.value = reservationLine;
             
             spaceYStart += size.height;
         }
@@ -143,7 +147,7 @@
     
     size = [productLine.resultString wmg_sizeConstrainedToWidth:(spaceXEnd - spaceXStart) numberOfLines:1];
     cellData.productObj.frame = CGRectMake(spaceXStart, spaceYStart, spaceXEnd - spaceXStart, size.height);
-    cellData.productObj.value = productLine.resultString;
+    cellData.productObj.value = productLine;
     spaceYStart += size.height;
     
     // 配送行
@@ -192,12 +196,13 @@
     
     size = [deliverLine.resultString wmg_sizeConstrainedToWidth:(spaceXEnd - spaceXStart) numberOfLines:1];
     cellData.deliverObj.frame = CGRectMake(spaceXStart, spaceYStart, spaceXEnd - spaceXStart, size.height);
-    cellData.deliverObj.value = deliverLine.resultString;
+    cellData.deliverObj.value = deliverLine;
     
     spaceYStart += size.height;
     
     if (!IsStrEmpty(poi.thirdCategory)) {
         WMMutableAttributedItem * thirdCategory = [WMMutableAttributedItem itemWithText:nil];
+    
         [thirdCategory appendText:poi.thirdCategory];
         [thirdCategory setFont:[UIFont systemFontOfSize:11]];
         [thirdCategory setColor:WMGHEXCOLOR(0x666460)];
@@ -205,14 +210,13 @@
         
         size = [thirdCategory.resultString wmg_sizeConstrainedToWidth:(spaceXEnd - spaceXStart) numberOfLines:1];
         cellData.markObj.frame = CGRectMake(spaceXStart, spaceYStart, size.width, size.height);
-        cellData.markObj.value = thirdCategory.resultString;
+        cellData.markObj.value = thirdCategory;
         spaceYStart += size.height;
     }
     
     // 标签
     CGFloat tagMaxWidth = spaceXEnd - spaceXStart - 30;
     WMPoiListAttributedImage *tags = [[WMPoiListAttributedImage alloc] initWithText:nil];
-    
     for (WMPoiLabelInfo *obj in poi.labelInfoArray) {
         WMMutableAttributedItem *str = [WMMutableAttributedItem itemWithText:obj.content];
         [str setColor:WMGHEXCOLOR(strtoul(obj.contentColor.UTF8String,0,0))];
@@ -222,6 +226,12 @@
         tagImage = [tagImage wmg_drawItem:str atPosition:CGPointMake(3, 0)];
         [tags appendImageWithImage:tagImage];
     }
+    
+    // block形式回调点击事件
+    [tags registerClickBlock:^{
+        [self tagDidClick:cellData];
+    }];
+    
     WMGTextParagraphStyle *style = [WMGTextParagraphStyle defaultParagraphStyle];
     [style setLineSpacing:6];
     [tags setTextParagraphStyle:style fontSize:11];
@@ -235,16 +245,28 @@
         NSString *imageName = cellData.showAllTag ? @"icon_up" : @"icon_down";
         [arrow appendImageWithName:imageName size:CGSizeMake(7.5, 7.5)];
         size = [arrow.resultString wmg_size];
-        cellData.arrowObj.value = arrow.resultString;
+        cellData.arrowObj.value = arrow;
         cellData.arrowObj.frame = CGRectMake(spaceXEnd - size.width, spaceYStart- 5, size.width, size.height);
     }
     size = cellData.showAllTag ? allSize : onelineSize;
-    cellData.mutableTagObj.value = tags.resultString;
+    cellData.mutableTagObj.value = tags;
     cellData.mutableTagObj.frame = CGRectMake(spaceXStart, spaceYStart, size.width, size.height);
     spaceYStart += size.height;
     
     cellData.cellHeight = spaceYStart + marginV + 10;
     return cellData;
+}
+
+- (void)tagDidClick:(id)userInfo {
+    if ([self.owner respondsToSelector:@selector(tagDidClick:)]) {
+        [self.owner performSelector:@selector(tagDidClick:) withObject:userInfo];
+    }
+}
+
+- (void)titleDidClick:(id)userInfo {
+    if ([self.owner respondsToSelector:@selector(titleDidClick:)]) {
+        [self.owner performSelector:@selector(titleDidClick:) withObject:userInfo];
+    }
 }
 
 @end

@@ -13,7 +13,7 @@
 #import "WMPoiListEngine.h"
 
 
-@interface WMPoiListViewController ()<UITableViewDataSource,UITableViewDelegate,tagClickDelegate>
+@interface WMPoiListViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView * tableview;
 @property (nonatomic, strong) WMGBaseViewModel *viewModel;
@@ -30,6 +30,7 @@
     
     _viewModel = [[WMPoiListViewModel alloc] init];
     _viewModel.engine = [[WMPoiListEngine alloc] init];
+    _viewModel.owner = self;
     
     __weak typeof(self) weakSelf = self;
     [_viewModel reloadDataWithParams:@{} completion:^(NSArray<WMGBaseCellData *> *cellLayouts, NSError *error) {
@@ -93,18 +94,24 @@
 }
 
 
-#pragma mark - tagClickDelegate
-- (void)tagDidClickInCell:(WMGBaseCell *)cell{
-    if (![(WMPoiListCellData*)cell.cellData canShowAllTag]) {
+#pragma mark - 点击回调
+- (void)titleDidClick:(NSString *)title {
+    NSLog(@"点击了店铺 %@ 的标题",title);
+}
+
+- (void)tagDidClick:(WMPoiListCellData *)cellData {
+    if (![cellData canShowAllTag]) {
         return;
     }
     
-    WMPoiListModel *model = (WMPoiListModel *)cell.cellData.metaData;
+    NSInteger index = [_viewModel.arrayLayouts indexOfObject:cellData];
+    WMPoiListModel *model = (WMPoiListModel *)cellData.metaData;
     model.showAlltag = !model.showAlltag;
     [model setNeedsUpdateUIData];
     
     [_viewModel refreshModelWithResultSet:_viewModel.engine.resultSet];
-    [_tableview reloadData];
+    
+    [_tableview reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 
 }
 

@@ -24,8 +24,9 @@
 
 typedef NS_ENUM(NSInteger, WMGAttachmentType)
 {
-    WMGAttachmentTypeStaticImage  = 0,
-    WMGAttachmentTypePlaceholder  = 1,
+    WMGAttachmentTypeText         = 0,
+    WMGAttachmentTypeStaticImage  = 1,
+    WMGAttachmentTypePlaceholder  = 2,
     
     WMGAttachmentTypeApplicationReserved = 0xF000,
 };
