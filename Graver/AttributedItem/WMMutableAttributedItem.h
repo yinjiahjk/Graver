@@ -315,12 +315,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  给 Item 绑定自定义信息,点击事件触发后会把信息回抛,优先级默认为0
+ *
+ * @param userInfo 自定义信息
+ *
+ */
+- (void)setUserInfo:(id _Nonnull)userInfo;
+
+/**
  *  给 Item 绑定自定义信息,点击事件触发后会把信息回抛
  *
  * @param userInfo 自定义信息
- * @param force 是否对原有信息进行替换
+ * @param priority userInfo的优先级,数字越小优先级越高
  */
-- (void)setUserInfo:(id _Nonnull)userInfo force:(BOOL)force;
+- (void)setUserInfo:(id _Nonnull)userInfo priority:(NSInteger)priority;
+
+
+/**
+ *  给一个文本组件添加事件,优先级默认为0
+ *
+ * @param target 事件执行者
+ * @param action 事件行为
+ * @param controlEvents 事件类型
+ *
+ */
+- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 
 /**
  *  给一个文本组件添加事件
@@ -328,9 +347,9 @@ NS_ASSUME_NONNULL_BEGIN
  * @param target 事件执行者
  * @param action 事件行为
  * @param controlEvents 事件类型
- * @param force 是否对原有事件进行替换
+ * @param priority 相应事件的优先级,数字越小优先级约高
  */
-- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents force:(BOOL)force;
+- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents priority:(NSInteger)priority;
 
 
 @end

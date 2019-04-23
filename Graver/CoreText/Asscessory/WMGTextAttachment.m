@@ -37,6 +37,8 @@ NSString * const WMGTextAttachmentReplacementCharacter = @"\uFFFC";
         _baselineFontMetrics = WMGFontMetricsZero;
         
         _edgeInsets = UIEdgeInsetsMake(0, 1, 0, 1);
+        _userInfoPriority = 999;
+        _eventPriority = 999;
     }
     return self;
 }

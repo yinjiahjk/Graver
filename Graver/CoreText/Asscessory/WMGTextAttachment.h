@@ -34,6 +34,12 @@ NS_ASSUME_NONNULL_BEGIN
 // 给 attachment 绑定的自定义信息
 @property (nonatomic, strong) id userInfo;
 
+// userInfo 绑定的优先级
+@property (nonatomic, assign) NSInteger userInfoPriority;
+
+// event 绑定的优先级
+@property (nonatomic, assign) NSInteger eventPriority;
+
 /**
  *  构建一个文本组件的类方法
  *

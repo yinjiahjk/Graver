@@ -413,22 +413,34 @@
     [_textStorage wmg_setTextParagraphStyle:paragraphStyle fontSize:fontSize];
 }
 
-- (void)setUserInfo:(id)userInfo force:(BOOL)force
+- (void)setUserInfo:(id)userInfo
+{
+    [self setUserInfo:userInfo priority:0];
+}
+
+- (void)setUserInfo:(id)userInfo priority:(NSInteger)priority
 {
     if (userInfo) {
         [self.arrayAttachments enumerateObjectsUsingBlock:^(WMGTextAttachment * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (!obj.userInfo || force) {
+            if (priority <= obj.userInfoPriority) {
                 obj.userInfo = userInfo;
+                obj.userInfoPriority = priority;
             }
         }];
     }
 }
 
-- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents force:(BOOL)force
+- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
 {
-    if (target && action) {
+    [self addTarget:target action:action forControlEvents:controlEvents priority:0];
+}
+
+- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents priority:(NSInteger)priority
+{
+    if (target && action && [target respondsToSelector:action]) {
         [self.arrayAttachments enumerateObjectsUsingBlock:^(WMGTextAttachment * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (force || (!obj.target || !obj.selector)) {
+            if (priority <= obj.eventPriority) {
+                obj.eventPriority = priority;
                 [obj addTarget:target action:action forControlEvents:controlEvents];
             }
         }];

@@ -55,8 +55,8 @@
     WMMutableAttributedItem *name = [WMMutableAttributedItem itemWithText:poi.name];
     [name setFont:[UIFont systemFontOfSize:16]];
     [name setColor:WMGHEXCOLOR(0x33312D)];
-    [name setUserInfo:poi.name force:YES];
-    [name addTarget:self action:@selector(titleDidClick:) forControlEvents:UIControlEventTouchUpInside force:YES];
+    [name setUserInfo:poi.name];
+    [name addTarget:self action:@selector(titleDidClick:) forControlEvents:UIControlEventTouchUpInside];
     
     size = [name.resultString wmg_sizeConstrainedToWidth:(spaceXEnd - spaceXStart) numberOfLines:1];
     cellData.nameObj.frame = CGRectMake(spaceXStart, spaceYStart, size.width, size.height);
@@ -224,8 +224,8 @@
         tagImage = [tagImage wmg_drawItem:str atPosition:CGPointMake(3, 0)];
         [tags appendImageWithImage:tagImage];
     }
-    [tags setUserInfo:cellData force:YES];;
-    [tags addTarget:self action:@selector(tagDidClick:) forControlEvents:UIControlEventTouchUpInside force:YES];
+    [tags setUserInfo:cellData];
+    [tags addTarget:self action:@selector(tagDidClick:) forControlEvents:UIControlEventTouchUpInside];
     WMGTextParagraphStyle *style = [WMGTextParagraphStyle defaultParagraphStyle];
     [style setLineSpacing:6];
     [tags setTextParagraphStyle:style fontSize:11];
