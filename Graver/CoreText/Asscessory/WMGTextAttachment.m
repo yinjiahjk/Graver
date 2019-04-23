@@ -26,6 +26,10 @@
 NSString * const WMGTextAttachmentAttributeName = @"WMGTextAttachmentAttributeName";
 NSString * const WMGTextAttachmentReplacementCharacter = @"\uFFFC";
 
+@interface WMGTextAttachment ()
+@property (nonatomic, strong) NSMutableArray *callBacks;
+@end
+
 @implementation WMGTextAttachment
 @synthesize type = _type, size = _size, edgeInsets = _edgeInsets, contents = _contents, position = _position, length = _length, baselineFontMetrics = _baselineFontMetrics;
 
@@ -39,6 +43,7 @@ NSString * const WMGTextAttachmentReplacementCharacter = @"\uFFFC";
         _edgeInsets = UIEdgeInsetsMake(0, 1, 0, 1);
         _userInfoPriority = 999;
         _eventPriority = 999;
+        _callBacks = [NSMutableArray array];
     }
     return self;
 }
@@ -80,6 +85,13 @@ NSString * const WMGTextAttachmentReplacementCharacter = @"\uFFFC";
     _responseEvent = (_target && _selector) && [_target respondsToSelector:_selector];
 }
 
+- (void)registerClickBlock:(void (^)(void))callBack {
+    if (!callBack) {
+        return;
+    }
+    [_callBacks addObject:callBack];
+}
+
 - (void)handleEvent:(id)sender
 {
     if (_target && _selector) {
@@ -88,6 +100,13 @@ NSString * const WMGTextAttachmentReplacementCharacter = @"\uFFFC";
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
             [_target performSelector:_selector withObject:sender];
 #pragma clang diagnostic pop
+        }
+    }
+    if (_callBacks.count) {
+        for (void (^callBack)(void) in _callBacks) {
+            if (callBack) {
+                callBack();
+            }
         }
     }
 }

@@ -351,6 +351,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents priority:(NSInteger)priority;
 
+/**
+ *  给一个文本组件添加点击回调
+ *
+ * @param callBack 点击事件执行回调
+ *
+ */
+- (void)registerClickBlock:(void(^)(void))callBack;
 
 @end
 

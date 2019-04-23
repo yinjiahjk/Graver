@@ -55,6 +55,8 @@
     WMMutableAttributedItem *name = [WMMutableAttributedItem itemWithText:poi.name];
     [name setFont:[UIFont systemFontOfSize:16]];
     [name setColor:WMGHEXCOLOR(0x33312D)];
+    
+    // 给商家名称添加点击事件
     [name setUserInfo:poi.name];
     [name addTarget:self action:@selector(titleDidClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -224,8 +226,12 @@
         tagImage = [tagImage wmg_drawItem:str atPosition:CGPointMake(3, 0)];
         [tags appendImageWithImage:tagImage];
     }
-    [tags setUserInfo:cellData];
-    [tags addTarget:self action:@selector(tagDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // block形式回调点击事件
+    [tags registerClickBlock:^{
+        [self tagDidClick:cellData];
+    }];
+    
     WMGTextParagraphStyle *style = [WMGTextParagraphStyle defaultParagraphStyle];
     [style setLineSpacing:6];
     [tags setTextParagraphStyle:style fontSize:11];

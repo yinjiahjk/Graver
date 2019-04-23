@@ -34,6 +34,15 @@ NS_ASSUME_NONNULL_BEGIN
 // 文本组件是否响应事件，默认responseEvent = （target && selector && target respondSelector:selector）
 @property (nonatomic, assign) BOOL responseEvent;
 
+// 给 attachment 绑定的自定义信息
+@property (nonatomic, strong) id userInfo;
+
+// userInfo 绑定的优先级
+@property (nonatomic, assign) NSInteger userInfoPriority;
+
+// event 绑定的优先级
+@property (nonatomic, assign) NSInteger eventPriority;
+
 /**
  *  给一个文本组件添加事件
  *
@@ -43,6 +52,14 @@ NS_ASSUME_NONNULL_BEGIN
  *
  */
 - (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
+
+/**
+ *  给一个文本组件添加点击回调
+ *
+ * @param callBack 点击事件执行回调
+ *
+ */
+- (void)registerClickBlock:(void(^)(void))callBack;
 
 /**
  *  处理事件，框架内部使用

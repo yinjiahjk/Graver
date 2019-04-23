@@ -447,4 +447,12 @@
     }
 }
 
+- (void)registerClickBlock:(void (^)(void))callBack {
+    if (callBack) {
+        [self.arrayAttachments enumerateObjectsUsingBlock:^(WMGTextAttachment * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj registerClickBlock:callBack];
+        }];
+    }
+}
+
 @end
