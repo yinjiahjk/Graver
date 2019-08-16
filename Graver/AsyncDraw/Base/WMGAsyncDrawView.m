@@ -348,6 +348,7 @@ static BOOL _globalAsyncDrawDisabled = NO;
             }
             
             if (CGImage) {
+                self.ciimage = [CIImage imageWithCGImage:CGImage];
                 CGImageRelease(CGImage);
             }
         }

@@ -29,6 +29,9 @@ typedef void(^WMGAsyncDrawCallback)(BOOL drawInBackground);
 // 绘制完成后，内容经过此时间的渐变显示出来，默认为 0.0
 @property (nonatomic, assign) NSTimeInterval fadeDuration;
 
+//控件对应的ciimage，用于后期合成
+@property (nonatomic, strong) CIImage* ciimage;
+
 // 绘制逻辑，定义同步绘制或异步，详细见枚举定义，默认为 WMGViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged
 @property (nonatomic, assign) WMGViewDrawingPolicy drawingPolicy;
 
