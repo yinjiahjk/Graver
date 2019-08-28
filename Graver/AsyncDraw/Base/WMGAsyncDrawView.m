@@ -251,8 +251,9 @@ static BOOL _globalAsyncDrawDisabled = NO;
     
     NSDictionary *drawingUserInfo = [self currentDrawingUserInfo];
     
+    __weak __typeof(self)weakSelf = self;
     void (^drawBlock)(void) = ^{
-        
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
         void (^failedBlock)(void) = ^{
             if (interruptCallback)
             {
@@ -348,7 +349,7 @@ static BOOL _globalAsyncDrawDisabled = NO;
             }
             
             if (CGImage) {
-                self.ciimage = [CIImage imageWithCGImage:CGImage];
+                strongSelf.ciimage = [CIImage imageWithCGImage:CGImage];
                 CGImageRelease(CGImage);
             }
         }
