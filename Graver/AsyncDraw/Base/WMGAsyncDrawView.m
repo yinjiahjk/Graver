@@ -191,6 +191,12 @@ static BOOL _globalAsyncDrawDisabled = NO;
     [self displayLayer:self.layer];
 }
 
+- (void)redrawWithContentScale:(NSInteger)scale
+{
+    self.layer.contentsScale = scale;
+    [self displayLayer:self.layer];
+}
+
 - (void)setNeedsDisplayAsync
 {
     self.contentsChangedAfterLastAsyncDrawing = YES;
