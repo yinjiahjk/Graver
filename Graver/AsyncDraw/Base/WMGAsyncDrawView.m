@@ -191,9 +191,9 @@ static BOOL _globalAsyncDrawDisabled = NO;
     [self displayLayer:self.layer];
 }
 
-- (void)redrawWithContentScale:(NSInteger)scale
+- (void)redrawWithOnePlusScale
 {
-    self.layer.contentsScale = scale;
+    self.layer.contentsScale = 1;
     [self displayLayer:self.layer];
 }
 
