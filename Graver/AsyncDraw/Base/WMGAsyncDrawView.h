@@ -83,6 +83,11 @@ typedef void(^WMGAsyncDrawCallback)(BOOL drawInBackground);
  */
 - (void)redraw;
 
+/**
+ * 立即开始以控件的原始大小(拿到的图片不会放大)重绘流程，无需等到下一个runloop（异步绘制会在下个runloop开始）
+ */
+- (void)redrawWithOnePlusScale;
+
 #pragma mark - Methods for subclass overriding
 
 /**
