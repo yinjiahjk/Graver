@@ -73,6 +73,7 @@ static BOOL _globalAsyncDrawDisabled = NO;
         self.layer.contentsScale = [[UIScreen mainScreen] scale];
         self.dispatchPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT;
         
+        self.viewImagePolicy = WMGViewImagePolicyForPhone;
         // make overrides work
         self.drawingPolicy = self.drawingPolicy;
         self.fadeDuration = self.fadeDuration;
@@ -279,7 +280,12 @@ static BOOL _globalAsyncDrawDisabled = NO;
         BOOL drawingFinished = YES;
         
         if (contextSizeValid) {
-            UIGraphicsBeginImageContextWithOptions(contextSize, layer.isOpaque, layer.contentsScale);
+            CGFloat contentScale = layer.contentsScale;
+            if (self.viewImagePolicy == WMGViewImagePolicyForCar)
+            {
+                contentScale = 1;
+            }
+            UIGraphicsBeginImageContextWithOptions(contextSize, layer.isOpaque, contentScale);
             
             context = UIGraphicsGetCurrentContext();
             
