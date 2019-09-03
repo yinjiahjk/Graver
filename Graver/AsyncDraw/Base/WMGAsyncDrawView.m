@@ -25,6 +25,7 @@
 
 @interface WMGAsyncDrawView ()
 @property (nonatomic, weak) WMGAsyncDrawLayer *drawingLayer;
+//@property (nonatomic, strong, readwrite) CIImage* ciimage;
 
 - (void)_displayLayer:(WMGAsyncDrawLayer *)layer
                  rect:(CGRect)rectToDraw
@@ -360,8 +361,23 @@ static BOOL _globalAsyncDrawDisabled = NO;
                 }
             }
             
-            if (CGImage) {
-                strongSelf.ciimage = [CIImage imageWithCGImage:CGImage];
+            if (CGImage)
+            {
+                
+                CIImage* image = [CIImage imageWithCGImage:CGImage];
+                CGRect toRect = self.frame;
+                if (toRect.origin.y != 0)
+                {
+                    CGRect superFrame = self.superview.frame;
+                    CGRect fromRect = image.extent;
+                    toRect.origin.y = superFrame.size.height - toRect.origin.y - toRect.size.height;
+                    CGAffineTransform trans1 = CGAffineTransformMakeTranslation(-fromRect.origin.x, -fromRect.origin.y);
+                    CGAffineTransform scale = CGAffineTransformMakeScale(toRect.size.width/fromRect.size.width, toRect.size.height/fromRect.size.height);
+                    CGAffineTransform trans2 = CGAffineTransformMakeTranslation(toRect.origin.x, toRect.origin.y);
+                    CGAffineTransform transform = CGAffineTransformConcat(CGAffineTransformConcat(trans1, scale), trans2);
+                    image = [image imageByApplyingTransform:transform];
+                }
+                strongSelf.ciimage = image;
                 CGImageRelease(CGImage);
             }
         }
