@@ -366,7 +366,7 @@ static BOOL _globalAsyncDrawDisabled = NO;
                 
                 CIImage* image = [CIImage imageWithCGImage:CGImage];
                 CGRect toRect = self.frame;
-                if (toRect.origin.y != 0)
+                if ((strongSelf.viewImagePolicy == WMGViewImagePolicyForCar) && (toRect.origin.y != 0))
                 {
                     CGRect superFrame = self.superview.frame;
                     CGRect fromRect = image.extent;
