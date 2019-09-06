@@ -71,10 +71,10 @@ static BOOL _globalAsyncDrawDisabled = NO;
     {
         self.drawingPolicy = WMGViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged;
         self.opaque = NO;
-        self.layer.contentsScale = [[UIScreen mainScreen] scale];
+        self.contentScale = [[UIScreen mainScreen] scale];
+        self.layer.contentsScale = self.contentScale;
         self.dispatchPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT;
         
-        self.viewImagePolicy = WMGViewImagePolicyForPhone;
         // make overrides work
         self.drawingPolicy = self.drawingPolicy;
         self.fadeDuration = self.fadeDuration;
@@ -193,12 +193,6 @@ static BOOL _globalAsyncDrawDisabled = NO;
     [self displayLayer:self.layer];
 }
 
-- (void)redrawWithOnePlusScale
-{
-    self.layer.contentsScale = 1;
-    [self displayLayer:self.layer];
-}
-
 - (void)setNeedsDisplayAsync
 {
     self.contentsChangedAfterLastAsyncDrawing = YES;
@@ -281,12 +275,7 @@ static BOOL _globalAsyncDrawDisabled = NO;
         BOOL drawingFinished = YES;
         
         if (contextSizeValid) {
-            CGFloat contentScale = layer.contentsScale;
-            if (self.viewImagePolicy == WMGViewImagePolicyForCar)
-            {
-                contentScale = 1;
-            }
-            UIGraphicsBeginImageContextWithOptions(contextSize, layer.isOpaque, contentScale);
+            UIGraphicsBeginImageContextWithOptions(contextSize, layer.isOpaque, self.contentScale);
             
             context = UIGraphicsGetCurrentContext();
             
@@ -366,15 +355,14 @@ static BOOL _globalAsyncDrawDisabled = NO;
                 
                 CIImage* image = [CIImage imageWithCGImage:CGImage];
                 CGRect toRect = self.frame;
-                if ((strongSelf.viewImagePolicy == WMGViewImagePolicyForCar) && (toRect.origin.y != 0))
+                if (toRect.origin.y != 0)
                 {
                     CGRect superFrame = self.superview.frame;
                     CGRect fromRect = image.extent;
                     toRect.origin.y = superFrame.size.height - toRect.origin.y - toRect.size.height;
                     CGAffineTransform trans1 = CGAffineTransformMakeTranslation(-fromRect.origin.x, -fromRect.origin.y);
-                    CGAffineTransform scale = CGAffineTransformMakeScale(toRect.size.width/fromRect.size.width, toRect.size.height/fromRect.size.height);
                     CGAffineTransform trans2 = CGAffineTransformMakeTranslation(toRect.origin.x, toRect.origin.y);
-                    CGAffineTransform transform = CGAffineTransformConcat(CGAffineTransformConcat(trans1, scale), trans2);
+                    CGAffineTransform transform = CGAffineTransformConcat(trans1, trans2);
                     image = [image imageByApplyingTransform:transform];
                 }
                 strongSelf.ciimage = image;
