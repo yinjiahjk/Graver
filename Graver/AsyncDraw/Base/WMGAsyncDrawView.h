@@ -32,8 +32,8 @@ typedef void(^WMGAsyncDrawCallback)(BOOL drawInBackground);
 //控件对应的ciimage，用于后期合成
 @property (nonatomic, strong) CIImage* ciimage;
 
-//生成图片策略，默认手机策略
-@property (nonatomic, assign) WMGViewImagePolicy viewImagePolicy;
+//内容缩放系数，默认是屏幕系数
+@property (nonatomic, assign) CGFloat contentScale;
 
 // 绘制逻辑，定义同步绘制或异步，详细见枚举定义，默认为 WMGViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged
 @property (nonatomic, assign) WMGViewDrawingPolicy drawingPolicy;
@@ -85,11 +85,6 @@ typedef void(^WMGAsyncDrawCallback)(BOOL drawInBackground);
  * 立即开始重绘流程，无需等到下一个runloop（异步绘制会在下个runloop开始）
  */
 - (void)redraw;
-
-/**
- * 立即开始以控件的原始大小(拿到的图片不会放大)重绘流程，无需等到下一个runloop（异步绘制会在下个runloop开始）
- */
-- (void)redrawWithOnePlusScale;
 
 #pragma mark - Methods for subclass overriding
 
