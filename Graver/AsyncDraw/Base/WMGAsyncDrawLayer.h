@@ -31,14 +31,6 @@ typedef NS_ENUM(NSInteger, WMGViewDrawingPolicy)
     WMGViewDrawingPolicyAsynchronouslyDraw,
 };
 
-typedef NS_ENUM(NSInteger, WMGViewImagePolicy)
-{
-    // 手机策略,生成图片时放大
-    WMGViewImagePolicyForPhone,
-    // 车机策略，生成图片时保持原始大小
-    WMGViewImagePolicyForCar,
-};
-
 @interface WMGAsyncDrawLayer : CALayer
 
 // 绘制完成后，内容经过此时间的渐变显示出来，默认为 0.0
