@@ -32,6 +32,9 @@ typedef void(^WMGAsyncDrawCallback)(BOOL drawInBackground);
 //控件对应的ciimage，用于后期合成
 @property (nonatomic, strong) CIImage* ciimage;
 
+//强制指定父view的大小，有些试图因为不显示，所以父view的frame是不对的，有可能是（0，0，1，1）
+@property (nonatomic, assign) CGRect superFrame;
+
 //内容缩放系数，默认是屏幕系数
 @property (nonatomic, assign) CGFloat contentScale;
 
