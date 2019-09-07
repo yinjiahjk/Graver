@@ -25,6 +25,7 @@
 
 @interface WMGAsyncDrawView ()
 @property (nonatomic, weak) WMGAsyncDrawLayer *drawingLayer;
+@property (nonatomic, assign) BOOL needTransformCimage;
 //@property (nonatomic, strong, readwrite) CIImage* ciimage;
 
 - (void)_displayLayer:(WMGAsyncDrawLayer *)layer
@@ -71,7 +72,9 @@ static BOOL _globalAsyncDrawDisabled = NO;
     {
         self.drawingPolicy = WMGViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged;
         self.opaque = NO;
-        self.contentScale = [[UIScreen mainScreen] scale];
+        self.needTransformCimage = NO;
+        self.superFrame = CGRectZero;
+        _contentScale = [[UIScreen mainScreen] scale];
         self.layer.contentsScale = self.contentScale;
         self.dispatchPriority = DISPATCH_QUEUE_PRIORITY_DEFAULT;
         
@@ -154,6 +157,12 @@ static BOOL _globalAsyncDrawDisabled = NO;
 - (void)setFadeDuration:(NSTimeInterval)fadeDuration
 {
     _drawingLayer.fadeDuration = fadeDuration;
+}
+
+- (void)setContentScale:(CGFloat)contentScale
+{
+    _contentScale = contentScale;
+    _needTransformCimage = YES;
 }
 
 - (WMGViewDrawingPolicy)drawingPolicy
@@ -352,20 +361,28 @@ static BOOL _globalAsyncDrawDisabled = NO;
             
             if (CGImage)
             {
-                
-                CIImage* image = [CIImage imageWithCGImage:CGImage];
-                CGRect toRect = self.frame;
-                if (NO && toRect.origin.y != 0)
+                if (strongSelf.needTransformCimage)
                 {
-                    CGRect superFrame = self.superview.frame;
-                    CGRect fromRect = image.extent;
-                    toRect.origin.y = superFrame.size.height - toRect.origin.y - toRect.size.height;
-                    CGAffineTransform trans1 = CGAffineTransformMakeTranslation(-fromRect.origin.x, -fromRect.origin.y);
-                    CGAffineTransform trans2 = CGAffineTransformMakeTranslation(toRect.origin.x, toRect.origin.y);
-                    CGAffineTransform transform = CGAffineTransformConcat(trans1, trans2);
-                    image = [image imageByApplyingTransform:transform];
+                    CIImage* image = [CIImage imageWithCGImage:CGImage];
+                    CGRect toRect = self.frame;
+                    if (CGPointEqualToPoint(CGPointZero, toRect.origin) == NO)
+                    {
+                        CGRect superFrame = strongSelf.superFrame;
+                        if (CGRectEqualToRect(superFrame, CGRectZero))
+                        {
+                            superFrame = strongSelf.superview.frame;
+                        }
+                        CGRect fromRect = image.extent;
+                        toRect.origin.y = superFrame.size.height - toRect.origin.y - toRect.size.height;
+                        toRect.origin.x *= strongSelf.contentScale;
+                        toRect.origin.y *= strongSelf.contentScale;
+                        CGAffineTransform trans1 = CGAffineTransformMakeTranslation(-fromRect.origin.x, -fromRect.origin.y);
+                        CGAffineTransform trans2 = CGAffineTransformMakeTranslation(toRect.origin.x, toRect.origin.y);
+                        CGAffineTransform transform = CGAffineTransformConcat(trans1, trans2);
+                        image = [image imageByApplyingTransform:transform];
+                    }
+                    strongSelf.ciimage = image;
                 }
-                strongSelf.ciimage = image;
                 CGImageRelease(CGImage);
             }
         }
