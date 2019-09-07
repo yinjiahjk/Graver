@@ -361,9 +361,9 @@ static BOOL _globalAsyncDrawDisabled = NO;
             
             if (CGImage)
             {
+                CIImage* image = [CIImage imageWithCGImage:CGImage];
                 if (strongSelf.needTransformCimage)
                 {
-                    CIImage* image = [CIImage imageWithCGImage:CGImage];
                     CGRect toRect = self.frame;
                     if (CGPointEqualToPoint(CGPointZero, toRect.origin) == NO)
                     {
@@ -381,8 +381,8 @@ static BOOL _globalAsyncDrawDisabled = NO;
                         CGAffineTransform transform = CGAffineTransformConcat(trans1, trans2);
                         image = [image imageByApplyingTransform:transform];
                     }
-                    strongSelf.ciimage = image;
                 }
+                strongSelf.ciimage = image;
                 CGImageRelease(CGImage);
             }
         }
