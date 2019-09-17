@@ -51,4 +51,7 @@
 
 @property (nonatomic, strong) UIImage *backgroundImage;
 
+//背景图片名字
+- (void)setBackgroundImageName:(NSString*)imageName;
+
 @end
