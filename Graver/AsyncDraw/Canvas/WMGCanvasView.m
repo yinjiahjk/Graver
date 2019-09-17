@@ -20,6 +20,7 @@
     
 
 #import "WMGCanvasView.h"
+#import <SDWebImage/UIImage+ForceDecode.h>
 
 NSString * const WMGCanvasViewCornerRadiusKey      = @"waimai-graver-canvas-cornerradius-key";
 NSString * const WMGCanvasViewBorderWidthKey       = @"waimai-graver-canvas-borderwidth-key";
@@ -78,6 +79,24 @@ NSString * const WMGCanvasViewBackgroundImageKey   = @"waimai-graver-canvas-back
         
         self.contentsChangedAfterLastAsyncDrawing = YES;
         [self setNeedsDisplay];
+    }
+}
+
+- (void)setBackgroundImageName:(NSString*)imageName
+{
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateBackground)
+    {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            UIImage* image = [UIImage imageNamed:imageName];
+            UIImage* decodeImage = [UIImage decodedImageWithImage:image];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self setBackgroundImage:decodeImage];
+            });
+        });
+    }
+    else
+    {
+        [self setBackgroundImage:[UIImage imageNamed:imageName]];
     }
 }
 
